@@ -1,0 +1,69 @@
+From 000f2e363b30012098520ee3b2baa739ea22d700 Mon Sep 17 00:00:00 2001
+From: Jonathan Cagua <jonathan.cagua@gmail.com>
+Date: Fri, 6 Jan 2023 23:13:48 -0500
+Subject: [PATCH] ADD: agregando driver
+
+---
+ linux-5.10.4-808/drivers/misc/Kconfig     |  7 +++++++
+ linux-5.10.4-808/drivers/misc/Makefile    |  2 ++
+ linux-5.10.4-808/drivers/misc/jc_driver.c | 17 +++++++++++++++++
+ 3 files changed, 26 insertions(+)
+ create mode 100644 linux-5.10.4-808/drivers/misc/jc_driver.c
+
+diff --git a/linux-5.10.4-808/drivers/misc/Kconfig b/linux-5.10.4-808/drivers/misc/Kconfig
+index fafa8b0d8..a64395ec2 100644
+--- a/linux-5.10.4-808/drivers/misc/Kconfig
++++ b/linux-5.10.4-808/drivers/misc/Kconfig
+@@ -5,6 +5,13 @@
+ 
+ menu "Misc devices"
+ 
++config JC_DRIVER
++    tristate "Modulo pruebas de driver"
++    default m
++    help 
++	  Utilice la opcion Y para compilar de manera built-in.
++	  Por defecto se compila como modulo in-tree.
++
+ config SENSORS_LIS3LV02D
+ 	tristate
+ 	depends on INPUT
+diff --git a/linux-5.10.4-808/drivers/misc/Makefile b/linux-5.10.4-808/drivers/misc/Makefile
+index d23231e73..1ae3f3d87 100644
+--- a/linux-5.10.4-808/drivers/misc/Makefile
++++ b/linux-5.10.4-808/drivers/misc/Makefile
+@@ -3,6 +3,8 @@
+ # Makefile for misc devices that really don't fit anywhere else.
+ #
+ 
++
++obj-$(CONFIG_JC_DRIVER) 	+= jc_driver.o
+ obj-$(CONFIG_IBM_ASM)		+= ibmasm/
+ obj-$(CONFIG_IBMVMC)		+= ibmvmc.o
+ obj-$(CONFIG_AD525X_DPOT)	+= ad525x_dpot.o
+diff --git a/linux-5.10.4-808/drivers/misc/jc_driver.c b/linux-5.10.4-808/drivers/misc/jc_driver.c
+new file mode 100644
+index 000000000..cfc3f3802
+--- /dev/null
++++ b/linux-5.10.4-808/drivers/misc/jc_driver.c
+@@ -0,0 +1,17 @@
++#include <linux/init.h>
++#include <linux/module.h>
++#include <linux/kernel.h>
++
++static int __init hellowolrd_init(void) {
++    pr_info("init driver jc!\n");
++    return 0;
++}
++
++static void __exit hellowolrd_exit(void) {
++    pr_info("end driver jc\n");
++}
++
++module_init(hellowolrd_init);
++module_exit(hellowolrd_exit);
++MODULE_AUTHOR("Jonathan Cagua<jonathan.cagua@gmail.com>");
++MODULE_LICENSE("GPL");
+-- 
+2.25.1
+
