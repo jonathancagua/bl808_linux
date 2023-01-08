@@ -5,13 +5,6 @@
 
 menu "Misc devices"
 
-config JC_DRIVER
-    tristate "Modulo pruebas de driver"
-    default m
-    help 
-	  Utilice la opcion Y para compilar de manera built-in.
-	  Por defecto se compila como modulo in-tree.
-
 config SENSORS_LIS3LV02D
 	tristate
 	depends on INPUT
